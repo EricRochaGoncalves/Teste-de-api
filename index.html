@@ -45,19 +45,18 @@
   <div class="login-container">
     <h2>Login com Google</h2>
     <!-- Botão de login do Google -->
-    <button id="google-signin-button" onclick="signInWithGoogle()">Login com Google</button>
+    <button id="google-signin-button">Login com Google</button>
   </div>
 
   <!-- Carregar o SDK do Google -->
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <script>
-    // Função para inicializar o Google Sign-In
     function startApp() {
       gapi.load('auth2', function() {
         // Inicia o Google Auth2 com o client ID
         gapi.auth2.init({
-          client_id: '1038063374311-4mjs548qek95p9asq9q951op4fqrp2f4.apps.googleusercontent.com'  // Novo Client ID
+          client_id: '1038063374311-4mjs548qek95p9asq9q951op4fqrp2f4.apps.googleusercontent.com'  // Seu Client ID
         }).then(function() {
           console.log('Google API carregada e autenticada');
         }).catch(function(error) {
@@ -80,6 +79,9 @@
         alert('Erro ao tentar fazer login.');
       });
     }
+
+    // Definir o botão para chamar a função de login
+    document.getElementById('google-signin-button').onclick = signInWithGoogle;
 
     // Inicializar o app ao carregar a página
     startApp();
