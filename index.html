@@ -3,117 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Simples - Teste</title>
+  <title>Login com Google</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background-color: #f7f7f7;
       margin: 0;
     }
-
     .login-container {
-      background-color: white;
-      padding: 30px;
+      text-align: center;
+      padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: white;
     }
-
     h2 {
-      text-align: center;
       margin-bottom: 20px;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .error {
-      color: red;
-      text-align: center;
-    }
-
-    .welcome-message {
-      display: none;
-      text-align: center;
+      font-size: 24px;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
   <div class="login-container">
-    <h2>Login</h2>
-    <div class="error" id="error-message"></div>
-
-    <div class="input-group">
-      <input type="text" id="username" placeholder="Usuário" required>
-    </div>
-
-    <div class="input-group">
-      <input type="password" id="password" placeholder="Senha" required>
-    </div>
-
-    <button onclick="login()">Entrar</button>
-
-    <div class="welcome-message" id="welcome-message">
-      <h2>Bem-vindo!</h2>
-      <p>Você está logado como <span id="user"></span>.</p>
-    </div>
+    <h2>Login com Google</h2>
+    <!-- Botão de login do Google -->
+    <div id="google-signin-button"></div>
   </div>
 
+  <!-- Carregar o SDK do Google -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
   <script>
-    // Função para simular o login
-    function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const errorMessage = document.getElementById('error-message');
-      const welcomeMessage = document.getElementById('welcome-message');
-      const userSpan = document.getElementById('user');
-
-      // Usuário e senha simulados
-      const validUsername = 'usuario';
-      const validPassword = 'senha123';
-
-      // Verifica se os dados estão corretos
-      if (username === validUsername && password === validPassword) {
-        // Mostra a mensagem de boas-vindas
-        welcomeMessage.style.display = 'block';
-        userSpan.textContent = username;
-
-        // Esconde a tela de login
-        document.querySelector('.login-container').style.display = 'none';
-      } else {
-        // Exibe a mensagem de erro
-        errorMessage.textContent = 'Usuário ou senha incorretos. Tente novamente.';
-      }
+    // Função para inicializar o Google Sign-In
+    function startApp() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init({
+          client_id: '1038063374311-33nq4hcvkhntu1bs322p2e4658pnd4e8.apps.googleusercontent.com'  // Substitua com seu Client ID
+        }).then(function() {
+          // Renderizar o botão de login
+          gapi.signin2.render('google-signin-button', {
+            scope: 'profile email',
+            longtitle: true,  // Botão com título completo
+            theme: 'dark',    // Tema escuro
+            onsuccess: onSignIn,
+            onfailure: onSignInFailure
+          });
+        });
+      });
     }
+
+    // Função para lidar com o sucesso do login
+    function onSignIn(googleUser) {
+      const profile = googleUser.getBasicProfile();
+      console.log('Nome: ' + profile.getName());
+      console.log('Email: ' + profile.getEmail());
+      alert('Login bem-sucedido!\nNome: ' + profile.getName() + '\nE-mail: ' + profile.getEmail());
+    }
+
+    // Função para lidar com falha no login
+    function onSignInFailure(error) {
+      console.log('Erro no login: ', error);
+      alert('Erro ao tentar fazer login.');
+    }
+
+    // Inicializar o app ao carregar a página
+    startApp();
   </script>
 
 </body>
