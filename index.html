@@ -55,8 +55,13 @@
     // Função para inicializar o Google Sign-In
     function startApp() {
       gapi.load('auth2', function() {
+        // Inicia o Google Auth2 com o client ID
         gapi.auth2.init({
           client_id: '1038063374311-4mjs548qek95p9asq9q951op4fqrp2f4.apps.googleusercontent.com'  // Novo Client ID
+        }).then(function() {
+          console.log('Google API carregada e autenticada');
+        }).catch(function(error) {
+          console.log('Erro ao carregar a API do Google:', error);
         });
       });
     }
