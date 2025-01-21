@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Simples - Teste</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+    }
+
+    .welcome-message {
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <div class="error" id="error-message"></div>
+
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Usuário" required>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Senha" required>
+    </div>
+
+    <button onclick="login()">Entrar</button>
+
+    <div class="welcome-message" id="welcome-message">
+      <h2>Bem-vindo!</h2>
+      <p>Você está logado como <span id="user"></span>.</p>
+    </div>
+  </div>
+
+  <script>
+    // Função para simular o login
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('error-message');
+      const welcomeMessage = document.getElementById('welcome-message');
+      const userSpan = document.getElementById('user');
+
+      // Usuário e senha simulados
+      const validUsername = 'usuario';
+      const validPassword = 'senha123';
+
+      // Verifica se os dados estão corretos
+      if (username === validUsername && password === validPassword) {
+        // Mostra a mensagem de boas-vindas
+        welcomeMessage.style.display = 'block';
+        userSpan.textContent = username;
+
+        // Esconde a tela de login
+        document.querySelector('.login-container').style.display = 'none';
+      } else {
+        // Exibe a mensagem de erro
+        errorMessage.textContent = 'Usuário ou senha incorretos. Tente novamente.';
+      }
+    }
+  </script>
+
+</body>
+</html>
