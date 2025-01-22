@@ -101,6 +101,10 @@
   <div class="navbar">
     <a href="#">Home</a>
     <button id="openLoginModalBtn">Login com Google</button>
+    <!-- Espaço para a imagem do perfil do usuário -->
+    <div id="profile-image-container" style="display: none;">
+      <img id="profile-image" src="" alt="Imagem de Perfil" width="40" height="40" style="border-radius: 50%;">
+    </div>
   </div>
 
   <div class="container">
@@ -194,12 +198,19 @@
       // Decodificar o token JWT
       const userInfo = parseJwt(response.credential);
 
+      // Exibir a imagem de perfil no lugar do botão de login
+      const profileImageContainer = document.getElementById("profile-image-container");
+      const profileImage = document.getElementById("profile-image");
+      profileImage.src = userInfo.picture; // Imagem do perfil
+      profileImageContainer.style.display = "block"; // Exibe a imagem do perfil
+
+      // Ocultar o botão de login
+      const loginButton = document.getElementById("openLoginModalBtn");
+      loginButton.style.display = "none";
+
       // Exibir o modal de sucesso
       successModal.style.display = "block";
       
-      // Ocultar as informações do usuário (não exibir)
-      document.getElementById("user-info").style.display = "none";
-
       // Fechar o modal de login
       loginModal.style.display = "none";
     }
