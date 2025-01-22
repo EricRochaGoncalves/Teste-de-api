@@ -6,29 +6,40 @@
   <title>Login com Google</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
+    /* Estilo geral da página */
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 50px;
     }
-    /* Estilos para os modais */
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Estilo para os modais */
     .modal {
-      display: none; /* Escondido por padrão */
+      display: none;
       position: fixed;
-      z-index: 1; /* Fica por cima do conteúdo */
+      z-index: 1;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+      background-color: rgba(0, 0, 0, 0.5);
     }
+
     .modal-content {
       background-color: #fff;
       margin: 15% auto;
       padding: 20px;
       border-radius: 5px;
       width: 300px;
+      position: relative;
     }
+
+    /* Botão de fechar */
     .close {
       color: #aaa;
       font-size: 28px;
@@ -37,107 +48,129 @@
       top: 10px;
       right: 10px;
     }
+
     .close:hover,
     .close:focus {
       color: black;
       text-decoration: none;
       cursor: pointer;
     }
+
+    /* Estilo para o botão de login */
+    .g_id_signin {
+      margin-top: 20px;
+    }
+
     .user-info {
       margin-top: 20px;
       display: none;
     }
+
     .user-info img {
       border-radius: 50%;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <h1>Login com Google</h1>
+  <div class="container">
+    <h1>Login com Google</h1>
+    <!-- Botão para abrir o modal de login -->
+    <button id="openLoginModalBtn">Abrir Modal de Login</button>
 
-  <!-- Botão para abrir o modal de login -->
-  <button id="openModalBtn">Abrir Modal de Login</button>
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeLoginModalBtn">&times;</span>
+        <h2>Login com Google</h2>
 
-  <!-- O Modal de Login -->
-  <div id="loginModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeLoginModalBtn">&times;</span>
+        <!-- Div para carregar o botão de login -->
+        <div id="g_id_onload"
+             data-client_id="YOUR_CLIENT_ID.apps.googleusercontent.com"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
 
-      <!-- Div para carregar o botão de login -->
-      <div id="g_id_onload"
-           data-client_id="1038063374311-c6pdo0fjm5e913usd2paqguthpg56n2p.apps.googleusercontent.com"
-           data-callback="handleCredentialResponse"
-           data-auto_prompt="false">
-      </div>
-
-      <!-- Botão de login -->
-      <div class="g_id_signin"
-           data-type="standard"
-           data-shape="rectangular"
-           data-theme="outline"
-           data-text="sign_in_with"
-           data-size="large"
-           data-logo_alignment="left">
-      </div>
-
-      <!-- Exibir informações do usuário -->
-      <div class="user-info" id="user-info">
-        <h2>Informações do Usuário</h2>
-        <img id="user-image" src="" alt="Foto de Perfil" width="100">
-        <p><strong>Nome:</strong> <span id="user-name"></span></p>
-        <p><strong>Email:</strong> <span id="user-email"></span></p>
+        <!-- Botão de login -->
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="sign_in_with"
+             data-size="large"
+             data-logo_alignment="left">
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- O Modal de Sucesso -->
-  <div id="successModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeSuccessModalBtn">&times;</span>
-      <h2>Login feito com sucesso!</h2>
-      <p>Bem-vindo(a) ao sistema.</p>
-      <button id="closeAllModalsBtn">Fechar Todos os Modais</button>
+    <!-- Modal de Sucesso -->
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeSuccessModalBtn">&times;</span>
+        <h2>Login feito com sucesso!</h2>
+        <p>Bem-vindo(a) ao sistema.</p>
+        <button id="closeAllModalsBtn">Fechar Todos os Modais</button>
+      </div>
+    </div>
+
+    <!-- Exibir informações do usuário -->
+    <div class="user-info" id="user-info">
+      <h2>Informações do Usuário</h2>
+      <img id="user-image" src="" alt="Foto de Perfil" width="100">
+      <p><strong>Nome:</strong> <span id="user-name"></span></p>
+      <p><strong>Email:</strong> <span id="user-email"></span></p>
     </div>
   </div>
 
   <script>
-    // Obter os elementos do modal e botão
-    const modal = document.getElementById("loginModal");
-    const successModal = document.getElementById("successModal");
-    const openModalBtn = document.getElementById("openModalBtn");
+    // Selecionar os elementos dos modais e botões
+    const openLoginModalBtn = document.getElementById("openLoginModalBtn");
+    const loginModal = document.getElementById("loginModal");
     const closeLoginModalBtn = document.getElementById("closeLoginModalBtn");
+    const successModal = document.getElementById("successModal");
     const closeSuccessModalBtn = document.getElementById("closeSuccessModalBtn");
     const closeAllModalsBtn = document.getElementById("closeAllModalsBtn");
 
-    // Abrir o modal de login quando o botão for clicado
-    openModalBtn.onclick = function() {
-      modal.style.display = "block";
-    }
+    // Função para abrir o modal de login
+    openLoginModalBtn.onclick = function() {
+      loginModal.style.display = "block";
+    };
 
-    // Fechar o modal de login quando o "X" for clicado
+    // Função para fechar o modal de login
     closeLoginModalBtn.onclick = function() {
-      modal.style.display = "none";
-    }
+      loginModal.style.display = "none";
+    };
 
-    // Fechar o modal de sucesso quando o "X" for clicado
+    // Função para fechar o modal de sucesso
     closeSuccessModalBtn.onclick = function() {
       successModal.style.display = "none";
-    }
+    };
 
-    // Fechar todos os modais quando o botão de fechar todos for clicado
+    // Função para fechar todos os modais
     closeAllModalsBtn.onclick = function() {
-      modal.style.display = "none";
+      loginModal.style.display = "none";
       successModal.style.display = "none";
-    }
+    };
 
-    // Fechar o modal se o usuário clicar fora do conteúdo do modal
+    // Fechar o modal quando clicar fora do conteúdo do modal
     window.onclick = function(event) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      } else if (event.target === successModal) {
+      if (event.target === loginModal || event.target === successModal) {
+        loginModal.style.display = "none";
         successModal.style.display = "none";
       }
-    }
+    };
 
     // Função chamada após o login bem-sucedido
     function handleCredentialResponse(response) {
@@ -147,20 +180,16 @@
       const userInfo = parseJwt(response.credential);
 
       // Atualizar a interface com as informações do usuário
-      document.getElementById("user-info").style.display = "block"; // Exibe as informações do usuário
+      document.getElementById("user-info").style.display = "block";
       document.getElementById("user-image").src = userInfo.picture;
       document.getElementById("user-name").textContent = userInfo.name;
       document.getElementById("user-email").textContent = userInfo.email;
 
       // Fechar o modal de login
-      modal.style.display = "none";
+      loginModal.style.display = "none";
 
       // Exibir o modal de sucesso
       successModal.style.display = "block";
-
-      // Ocultar o card de login
-      document.getElementById("g_id_onload").style.display = "none";  // Oculta o card de login
-      document.querySelector(".g_id_signin").style.display = "none";   // Oculta o botão de login
     }
 
     // Função para decodificar o token JWT
