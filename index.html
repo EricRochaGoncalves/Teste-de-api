@@ -11,7 +11,7 @@
       text-align: center;
       margin-top: 50px;
     }
-    /* Estilos para o modal */
+    /* Estilos para os modais */
     .modal {
       display: none; /* Escondido por padrão */
       position: fixed;
@@ -55,13 +55,13 @@
 <body>
   <h1>Login com Google</h1>
 
-  <!-- Botão para abrir o modal -->
+  <!-- Botão para abrir o modal de login -->
   <button id="openModalBtn">Abrir Modal de Login</button>
 
-  <!-- O Modal -->
+  <!-- O Modal de Login -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
-      <span class="close" id="closeModalBtn">&times;</span>
+      <span class="close" id="closeLoginModalBtn">&times;</span>
 
       <!-- Div para carregar o botão de login -->
       <div id="g_id_onload"
@@ -90,26 +90,52 @@
     </div>
   </div>
 
+  <!-- O Modal de Sucesso -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeSuccessModalBtn">&times;</span>
+      <h2>Login feito com sucesso!</h2>
+      <p>Bem-vindo(a) ao sistema.</p>
+      <button id="closeAllModalsBtn">Fechar Todos os Modais</button>
+    </div>
+  </div>
+
   <script>
     // Obter os elementos do modal e botão
     const modal = document.getElementById("loginModal");
+    const successModal = document.getElementById("successModal");
     const openModalBtn = document.getElementById("openModalBtn");
-    const closeModalBtn = document.getElementById("closeModalBtn");
+    const closeLoginModalBtn = document.getElementById("closeLoginModalBtn");
+    const closeSuccessModalBtn = document.getElementById("closeSuccessModalBtn");
+    const closeAllModalsBtn = document.getElementById("closeAllModalsBtn");
 
-    // Abrir o modal quando o botão for clicado
+    // Abrir o modal de login quando o botão for clicado
     openModalBtn.onclick = function() {
       modal.style.display = "block";
     }
 
-    // Fechar o modal quando o "X" for clicado
-    closeModalBtn.onclick = function() {
+    // Fechar o modal de login quando o "X" for clicado
+    closeLoginModalBtn.onclick = function() {
       modal.style.display = "none";
+    }
+
+    // Fechar o modal de sucesso quando o "X" for clicado
+    closeSuccessModalBtn.onclick = function() {
+      successModal.style.display = "none";
+    }
+
+    // Fechar todos os modais quando o botão de fechar todos for clicado
+    closeAllModalsBtn.onclick = function() {
+      modal.style.display = "none";
+      successModal.style.display = "none";
     }
 
     // Fechar o modal se o usuário clicar fora do conteúdo do modal
     window.onclick = function(event) {
       if (event.target === modal) {
         modal.style.display = "none";
+      } else if (event.target === successModal) {
+        successModal.style.display = "none";
       }
     }
 
@@ -126,8 +152,11 @@
       document.getElementById("user-name").textContent = userInfo.name;
       document.getElementById("user-email").textContent = userInfo.email;
 
-      // Fechar o modal automaticamente após o login
+      // Fechar o modal de login
       modal.style.display = "none";
+
+      // Exibir o modal de sucesso
+      successModal.style.display = "block";
 
       // Ocultar o card de login
       document.getElementById("g_id_onload").style.display = "none";  // Oculta o card de login
