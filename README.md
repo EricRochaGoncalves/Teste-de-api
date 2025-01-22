@@ -140,7 +140,7 @@ Lembre-se de substituir 'SUA_API_KEY' e 'SEU_CLIENT_ID' pelos valores reais da s
 
 ---
 
-Este tutorial fornece uma explicação passo a passo para adicionar a Google API e autenticação via Google ao seu projeto. Adicione este tutorial no seu README para que outras pessoas saibam como utilizar a API no seu código!
+
 
 
 
