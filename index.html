@@ -49,6 +49,7 @@
     <img id="user-image" src="" alt="Foto de Perfil" width="100">
     <p><strong>Nome:</strong> <span id="user-name"></span></p>
     <p><strong>Email:</strong> <span id="user-email"></span></p>
+    <button id="close-info" onclick="closeUserInfo()">Fechar</button> <!-- Botão para fechar a seção de informações -->
   </div>
 
   <script>
@@ -81,6 +82,11 @@
           .join('')
       );
       return JSON.parse(jsonPayload);
+    }
+
+    // Função para fechar a seção de informações do usuário
+    function closeUserInfo() {
+      document.getElementById("user-info").style.display = "none"; // Esconde as informações do usuário
     }
   </script>
 </body>
