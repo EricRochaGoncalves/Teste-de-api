@@ -7,11 +7,10 @@ Eu não sou apenas mais um dev júnior que segue tutoriais e copia código. Eu s
 
 "Eu sou mais forte, mais esperto, eu sou melhor, eu sou melhor."
 
-![GitHub last commit](https://img.shields.io/github/last-commit/SEU_USUARIO/SEU_REPOSITORIO?color=4285F4)
-![GitHub stars](https://img.shields.io/github/stars/SEU_USUARIO/SEU_REPOSITORIO?style=social&color=34A853)
-![GitHub forks](https://img.shields.io/github/forks/SEU_USUARIO/SEU_REPOSITORIO?style=social&color=FBBC05)
-![NPM version](https://img.shields.io/npm/v/SEU_PACOTE?color=EA4335)
-
+![Login com Google](https://img.shields.io/badge/Login_com_Google-4285F4?style=flat-square&logo=google&logoColor=white)
+![API Integrada](https://img.shields.io/badge/API_Integrada-34A853?style=flat-square&logo=google&logoColor=white)
+![Desenvolvedor Experiente](https://img.shields.io/badge/Desenvolvedor_Experiente-FBBC05?style=flat-square&logo=developer&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-EA4335?style=flat-square&logo=javascript&logoColor=white)
 
 
 
