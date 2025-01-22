@@ -11,7 +11,7 @@ Eu não sou apenas mais um dev júnior que segue tutoriais e copia código. Eu s
 ![CSS](https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Google API](https://img.shields.io/badge/Google_API-34A853?style=flat-square&logo=google&logoColor=white)
-![Code Studio](https://img.shields.io/badge/Code_Studio-1E1E1E?style=flat-square&logo=visualstudiocode&logoColor=white)
+![Code Studio](https://img.shields.io/badge/Code_Studio-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white)
 
 
 
