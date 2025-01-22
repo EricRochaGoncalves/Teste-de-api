@@ -1,91 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login com Google</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f7f7f7;
-      margin: 0;
-    }
-    .login-container {
       text-align: center;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: white;
+      margin-top: 50px;
     }
-    h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
+    .user-info {
+      margin-top: 20px;
+      display: none;
     }
-    #google-signin-button {
-      padding: 10px 20px;
-      background-color: #4285f4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    #google-signin-button:hover {
-      background-color: #357ae8;
+    .user-info img {
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
-
-  <div class="login-container">
-    <h2>Login com Google</h2>
-    <!-- Botão de login do Google -->
-    <button id="google-signin-button">Login com Google</button>
+  <h1>Login com Google</h1>
+  
+  <!-- Div para carregar o botão de login -->
+  <div id="g_id_onload"
+       data-client_id="1038063374311-c6pdo0fjm5e913usd2paqguthpg56n2p.apps.googleusercontent.com"
+       data-callback="handleCredentialResponse"
+       data-auto_prompt="false">
+  </div>
+  
+  <!-- Botão de login -->
+  <div class="g_id_signin"
+       data-type="standard"
+       data-shape="rectangular"
+       data-theme="outline"
+       data-text="sign_in_with"
+       data-size="large"
+       data-logo_alignment="left">
   </div>
 
-  <!-- Carregar o SDK do Google -->
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!-- Exibir informações do usuário -->
+  <div class="user-info" id="user-info">
+    <h2>Informações do Usuário</h2>
+    <img id="user-image" src="" alt="Foto de Perfil" width="100">
+    <p><strong>Nome:</strong> <span id="user-name"></span></p>
+    <p><strong>Email:</strong> <span id="user-email"></span></p>
+  </div>
 
   <script>
-    function startApp() {
-      gapi.load('auth2', function() {
-        // Inicia o Google Auth2 com o client ID
-        gapi.auth2.init({
-          client_id: '1038063374311-c6pdo0fjm5e913usd2paqguthpg56n2p.apps.googleusercontent.com'  // Seu Client ID atualizado
-        }).then(function() {
-          console.log('Google API carregada e autenticada');
-        }).catch(function(error) {
-          console.log('Erro ao carregar a API do Google:', error);
-        });
-      });
+    // Função chamada após o login bem-sucedido
+    function handleCredentialResponse(response) {
+      console.log("Token JWT recebido:", response.credential);
+
+      // Decodificar o token JWT
+      const userInfo = parseJwt(response.credential);
+
+      // Atualizar a interface com as informações do usuário
+      document.getElementById("user-info").style.display = "block";
+      document.getElementById("user-image").src = userInfo.picture;
+      document.getElementById("user-name").textContent = userInfo.name;
+      document.getElementById("user-email").textContent = userInfo.email;
     }
 
-    // Função para iniciar o login
-    function signInWithGoogle() {
-      const auth2 = gapi.auth2.getAuthInstance();
-      
-      auth2.signIn().then(function(googleUser) {
-        const profile = googleUser.getBasicProfile();
-        console.log('Nome: ' + profile.getName());
-        console.log('Email: ' + profile.getEmail());
-        alert('Login bem-sucedido!\nNome: ' + profile.getName() + '\nE-mail: ' + profile.getEmail());
-      }).catch(function(error) {
-        console.log('Erro no login: ', error);
-        alert('Erro ao tentar fazer login.');
-      });
+    // Função para decodificar o token JWT
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
     }
-
-    // Definir o botão para chamar a função de login
-    document.getElementById('google-signin-button').onclick = signInWithGoogle;
-
-    // Inicializar o app ao carregar a página
-    startApp();
   </script>
-
 </body>
 </html>
